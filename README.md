@@ -5,8 +5,8 @@
 F12抓包如下图所示：
 <img width="835" alt="image" src="https://github.com/user-attachments/assets/7ebb4610-1814-446c-a103-e30a0ae8b0f4" />
 
-username:学号名
-password：加密后的密码
+username:学号名 \
+password：加密后的密码 \
 lt: 参数1
 dllt: 参数2
 execution: 参数3
