@@ -22,7 +22,6 @@ def get_p1():
     execution = soup.find('input', {'name': 'execution'})['value']
     eventId = soup.find('input', {'name': '_eventId'})['value']
     rmShown = soup.find('input', {'name': 'rmShown'})['value']
-    print(dllt,lt,eventId,execution,rmShown)
     # 找到所有 <script> 标签
     script_tags = soup.find_all('script')
 
@@ -34,7 +33,6 @@ def get_p1():
             match = re.search(r'var\s+pwdDefaultEncryptSalt\s*=\s*"([^"]+)"', script_content)
             if match:
                 pwdDefaultEncryptSalt = match.group(1)
-                print(f'pwdDefaultEncryptSalt: {pwdDefaultEncryptSalt}')
                 get_passwd(pwdDefaultEncryptSalt,dllt,lt,eventId,execution,rmShown)
 
 
@@ -50,7 +48,6 @@ def get_passwd(p1,dllt,lt,eventId,execution,rmShown):
     # result_16 = '7AnjaEeCssQxMiXz'
     result_64 = context.rds(context.len2) + 'lzw20021003'
     # result_64 = 'wQNdhpedChRaEZx5WfzmTdYZYZkitiQpBfjMA4rEyt2tp8Q3sJ5My3wWNBx6Npkp1'
-    print(result_64)
     file.close()
 
     with open('node.js', 'r') as f:
@@ -60,7 +57,6 @@ def get_passwd(p1,dllt,lt,eventId,execution,rmShown):
     context.p1 = p1
     context.iv0 = result_16
     f.close()
-    print(context.p1,context.data,context.iv0)
     context.execute(js_code1)
     password = context.gas(context.data, context.p1, context.iv0)
     get_sign(password,dllt,lt,eventId,execution,rmShown)
@@ -80,7 +76,6 @@ def get_sign(password,dllt,lt,eventId,execution,rmShown):
     data = {
         "_": timestamp
     }
-    print(timestamp)  # 输出当前时间的毫秒级 Unix 时间戳
     response = session.get(url, headers=headers, params=data)
     bigImage = response.json()['bigImage']
     smallImage = response.json()['smallImage']
@@ -104,7 +99,6 @@ def get_sign(password,dllt,lt,eventId,execution,rmShown):
     url1 = "https://webvpn.ujs.edu.cn/https/77726476706e69737468656265737421e0f6528f69256243300d8db9d6562d/cas/verifySliderImageCode.do?vpn-12-o2-pass.ujs.edu.cn"
     response1 = session.get(url1, headers=headers, params=data2)
     sign = response1.json()['sign']
-    print(response1.json())
     login(sign,password,dllt,lt,eventId,execution,rmShown)
 
 def login(sign,password,dllt,lt,eventId,execution,rmShown):
@@ -127,7 +121,6 @@ def login(sign,password,dllt,lt,eventId,execution,rmShown):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.6668.71 Safari/537.36"
     }
     response = session.post(url,headers=headers,data=data)
-    print(response.text)
 
     cookies = session.cookies.get_dict()
     cookie_header = {
